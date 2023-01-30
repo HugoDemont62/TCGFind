@@ -7,7 +7,23 @@ pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
 
 function Getpok() {
     const [results, setResults] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
+    
+    
+    function Pokemon({ name, artist, image, id }) {
+        return (
+            <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={image} />
+                <Card.Body>
+                    <Card.Title>{name}</Card.Title>
+                    <Card.Text>artist : {artist}</Card.Text>
+                    <Card.Text>Id : {id}</Card.Text>
+                </Card.Body>
+            </Card>
+        );
+    }
+    
     async function GetPokemon() {
         try {
             const data = (await axios.get("https://api.pokemontcg.io/v2/cards/")).data;
@@ -21,28 +37,27 @@ function Getpok() {
             await GetPokemon();
         })();
     }, []);
-
-
-    function Pokemon({ name, artist, image, id }) {
-        return (
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={image} />
-                <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
-                </Card.Body>
-            </Card>
-        );
-    }
-
     return (
         <>
-            <div className="App">
                 <Container className="d-flex justify-content-center">
-                    <h1>Get Pokemon</h1>
-                    <ul className="cards">
-                    {results.data && results.data.map((result) => {
+                <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => {setSearchTerm(event.target.value)}}/>
+                <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
+                    if (searchTerm == "") {
+                        return val
+                    } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return val
+                    }
+                }).length}</p>
+
+            <ul className="cards">
+
+                    {results.data && results.data.filter((val) => {
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            return val
+                        }
+                    }).map((result) => {
                         return (
                             <li>
                             <Pokemon
@@ -57,7 +72,6 @@ function Getpok() {
                     })}
                 </ul>
                 </Container>
-            </div>
         </>
     );
 }
