@@ -13,7 +13,7 @@ function Getpok() {
     
     function Pokemon({ name, artist, image, id }) {
         return (
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rem' }} className="cardmain">
                 <Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
@@ -29,7 +29,7 @@ function Getpok() {
             const data = (await axios.get("https://api.pokemontcg.io/v2/cards/")).data;
             setResults(data)
         } catch (err) {
-            console.error("error CharacterGroup/getCharacters", err)
+            console.error("error Pokemon", err)
         }
     }
     useEffect(() => {
@@ -39,7 +39,6 @@ function Getpok() {
     }, []);
     return (
         <>
-                <Container className="d-flex justify-content-center">
                 <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => {setSearchTerm(event.target.value)}}/>
                 <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
                     if (searchTerm == "") {
@@ -48,6 +47,7 @@ function Getpok() {
                         return val
                     }
                 }).length}</p>
+                <Container className="d-flex justify-content-center">
 
             <ul className="cards">
 
@@ -56,6 +56,12 @@ function Getpok() {
                             return val
                         } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return val
+                        }
+                    }).filter((val2) => {
+                        if (val2.id.includes("pl1-")) {
+                            return val2
+                        } else {
+                            return null
                         }
                     }).map((result) => {
                         return (
