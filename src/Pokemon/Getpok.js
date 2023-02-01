@@ -1,7 +1,7 @@
 import pokemon from 'pokemontcgsdk';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 
 pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
 
@@ -24,18 +24,31 @@ function Getpok() {
         );
     }
 
-    // function SetOnly() {
-    //     pokemon.card.all({ q: ' set.id:pl1' })
-    //         .then(cards => {
-    //             console.log(cards);
-    //         })
+    function SetOnly() {
 
-    //     return (
-    //         <div>
-    //             <h1>Set Only</h1>
-    //         </div>
-    //     );
-    // }
+        function Pp() {
+        pokemon.card.all({ q: ' set.id:pl1' })
+            .then(cards => {
+                const cardsArray = Object.values(cards);
+                {cardsArray.map((card) => {
+                    return (
+                        <div>
+                            <p>{card.name}</p>
+                            <p>{card.artist}</p>
+                            <p>{card.id}</p>
+                            </div>
+                    )
+                })}
+            })
+        }
+
+        return (
+            <div>
+                <h1>Set Only</h1>
+                <Pp />
+            </div>
+        );
+    }
     
     async function GetPokemon() {
         try {
@@ -54,19 +67,21 @@ function Getpok() {
         <>
                 <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => {setSearchTerm(event.target.value)}}/>
                 <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
-                    if (searchTerm == "") {
+                    if (searchTerm === "") {
                         return val
                     } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return val
                     }
                 }).length}</p>
 
+                <SetOnly />
+
                 <Container className="d-flex justify-content-center">
 
             <ul className="cards">
 
                     {results.data && results.data.filter((val) => {
-                        if (searchTerm == "") {
+                        if (searchTerm === "") {
                             return val
                         } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return val
