@@ -23,6 +23,19 @@ function Getpok() {
             </Card>
         );
     }
+
+    // function SetOnly() {
+    //     pokemon.card.all({ q: ' set.id:pl1' })
+    //         .then(cards => {
+    //             console.log(cards);
+    //         })
+
+    //     return (
+    //         <div>
+    //             <h1>Set Only</h1>
+    //         </div>
+    //     );
+    // }
     
     async function GetPokemon() {
         try {
@@ -47,6 +60,7 @@ function Getpok() {
                         return val
                     }
                 }).length}</p>
+
                 <Container className="d-flex justify-content-center">
 
             <ul className="cards">
