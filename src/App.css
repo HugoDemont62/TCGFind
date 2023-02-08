@@ -14,8 +14,15 @@
   gap: 40px;
 }
 
+.btn-pok{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .cardmain{
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .App-logo {

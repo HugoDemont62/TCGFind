@@ -1,16 +1,19 @@
 import pokemon from 'pokemontcgsdk';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
+
 
 function Getpok() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
 
-    
-    
+
+
+
     function Pokemon({ name, artist, image, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
@@ -24,61 +27,38 @@ function Getpok() {
         );
     }
 
-    function SetOnly() {
 
-        function Pp() {
-        pokemon.card.all({ q: ' set.id:pl1' })
-            .then(cards => {
-                const cardsArray = Object.values(cards);
-                {cardsArray.map((card) => {
-                    return (
-                        <div>
-                            <p>{card.name}</p>
-                            <p>{card.artist}</p>
-                            <p>{card.id}</p>
-                            </div>
-                    )
-                })}
-            })
-        }
-
-        return (
-            <div>
-                <h1>Set Only</h1>
-                <Pp />
-            </div>
-        );
-    }
-    
     async function GetPokemon() {
-        try {
-            const data = (await axios.get("https://api.pokemontcg.io/v2/cards/")).data;
-            setResults(data)
-        } catch (err) {
-            console.error("error Pokemon", err)
-        }
+        pokemon.card.where({ pageSize: 48, page: page, orderBy: 'name' }).then(cards => {
+            const cardsArray = Object.values(cards);
+            setResults({ data: cardsArray[0] })
+            //  console.log(cardsArray[0])
+        })
+
     }
     useEffect(() => {
         (async () => {
             await GetPokemon();
         })();
-    }, []);
+    }, [page]);
     return (
         <>
-                <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => {setSearchTerm(event.target.value)}}/>
-                <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
-                    if (searchTerm === "") {
-                        return val
-                    } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return val
-                    }
-                }).length}</p>
+            <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
+                if (searchTerm === "") {
+                    return val
+                } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return val
+                }
+            }).length}</p>
 
-                <SetOnly />
+            <div className='btn-pok'>
+            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
+            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
+            </div>
+            <Container className="d-flex justify-content-center">
 
-                <Container className="d-flex justify-content-center">
-
-            <ul className="cards">
+                <ul className="cards">
 
                     {results.data && results.data.filter((val) => {
                         if (searchTerm === "") {
@@ -86,27 +66,25 @@ function Getpok() {
                         } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return val
                         }
-                    }).filter((val2) => {
-                        if (val2.id.includes("pl1-")) {
-                            return val2
-                        } else {
-                            return null
-                        }
                     }).map((result) => {
                         return (
                             <li>
-                            <Pokemon
-                                key={result.id}
-                                name={result.name}
-                                artist={result.artist}
-                                id={result.id}
-                                image={result.images.small}
-                            />
+                                <Pokemon
+                                    key={result.id}
+                                    name={result.name}
+                                    artist={result.artist}
+                                    id={result.id}
+                                    image={result.images.small}
+                                />
                             </li>
                         );
                     })}
                 </ul>
-                </Container>
+            </Container>
+            <div className='btn-pok'>
+            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
+            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
+            </div>
         </>
     );
 }

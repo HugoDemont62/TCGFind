@@ -14,6 +14,7 @@ import {
     MDBCollapse
 } from 'mdb-react-ui-kit';
 import Getpok from "../Pokemon/Getpok";
+import Searchpok from "../Search/search";
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -22,7 +23,7 @@ export function Menub() {
         <>
             <MDBNavbar expand='lg' light bgColor='light'>
                 <MDBContainer fluid>
-                    <MDBNavbarBrand href='#'>TCGFind</MDBNavbarBrand>
+                    <MDBNavbarBrand href='/'>TCGFind</MDBNavbarBrand>
                     <MDBNavbarToggler
                         aria-expanded='false'
                         aria-label='Toggle navigation'
@@ -36,7 +37,8 @@ export function Menub() {
                                 Home
                             </MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Getpok">Cards</Link></MDBNavbarLink>
-                            <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
+                            <MDBNavbarLink><Link to="/Searchpok">Rechercher</Link></MDBNavbarLink>
+                            <MDBNavbarLink disabled href='/' tabIndex={-1} aria-disabled='true'>
                                 Disabled
                             </MDBNavbarLink>
                         </MDBNavbarNav>
@@ -45,6 +47,7 @@ export function Menub() {
             </MDBNavbar>
             <Routes>
                 <Route exact={true} path="/Getpok" element={<Getpok />}/>
+                <Route exact={true} path="/Searchpok" element={<Searchpok />}/>
             </Routes>
         </>
     );
