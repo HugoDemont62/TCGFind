@@ -15,6 +15,7 @@ import {
 } from 'mdb-react-ui-kit';
 import Getpok from "../Pokemon/Getpok";
 import Searchpok from "../Search/search";
+import Sets from "../Sets/sets";
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -37,6 +38,7 @@ export function Menub() {
                                 Home
                             </MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Getpok">Cards</Link></MDBNavbarLink>
+                            <MDBNavbarLink><Link to="/Sets">Sets</Link></MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Searchpok">Rechercher</Link></MDBNavbarLink>
                             <MDBNavbarLink disabled href='/' tabIndex={-1} aria-disabled='true'>
                                 Disabled
@@ -48,6 +50,7 @@ export function Menub() {
             <Routes>
                 <Route exact={true} path="/Getpok" element={<Getpok />}/>
                 <Route exact={true} path="/Searchpok" element={<Searchpok />}/>
+                <Route exact={true} path="/Sets" element={<Sets />}/>
             </Routes>
         </>
     );
