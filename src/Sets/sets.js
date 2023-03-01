@@ -16,12 +16,12 @@ export default function Sets() {
     function Pokemon({ name, artist, image, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
-                <Card.Img variant="top" src={image} />
+                <a href={id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>artist : {artist}</Card.Text>
                     <Card.Text>Id : {id}</Card.Text>
-                </Card.Body>
+                </Card.Body></a>
             </Card>
         );
     }
