@@ -1,38 +1,35 @@
-import pokemon from 'pokemontcgsdk';
-import { useEffect, useState } from 'react';
+import pokemon from 'pokemontcgsdk'
+import { useEffect, useState } from 'react'
 import { Container, Card, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+    useParams
+} from "react-router-dom";
 
-pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
-
-
-function Getpok() {
+export default function Eachpok() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [page, setPage] = useState(1);
-
-
-
+    let { name } = useParams();
 
     function Pokemon({ name, artist, image, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
-                <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
+                <Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>artist : {artist}</Card.Text>
                     <Card.Text>Id : {id}</Card.Text>
-                </Card.Body></a>
+                </Card.Body>
             </Card>
         );
     }
 
-
     async function GetPokemon() {
-        pokemon.card.where({ pageSize: 48, page: page, orderBy: 'name' }).then(cards => {
-            const cardsArray = Object.values(cards);
-            setResults({ data: cardsArray[0] })
-            //  console.log(cardsArray[0])
+        // display a set by id
+        pokemon.card.all({ q: 'id:' + name }).then(pok => {
+            const pokArray = Object.values(pok);
+            setResults({ data: pokArray })
+            // console.log(pokArray[0])
         })
 
     }
@@ -40,22 +37,12 @@ function Getpok() {
         (async () => {
             await GetPokemon();
         })();
-    }, [page]);
+    }, []);
     return (
         <>
-            <input type="text" placeholder="Rechercher un Pokémon dans cette liste" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
-            <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
-                if (searchTerm === "") {
-                    return val
-                } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return val
-                }
-            }).length}</p>
+            <h1>{name}</h1>
 
-            <div className='btn-pok'>
-            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
-            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
-            </div>
+          
             <Container className="d-flex justify-content-center">
 
                 <ul className="cards">
@@ -81,12 +68,6 @@ function Getpok() {
                     })}
                 </ul>
             </Container>
-            <div className='btn-pok'>
-            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
-            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
-            </div>
         </>
-    );
+    )
 }
-
-export default Getpok;

@@ -17,6 +17,7 @@ import Getpok from "../Pokemon/Getpok";
 import Searchpok from "../Search/search";
 import Sets from "../Sets/sets";
 import Eachset from "../Sets/eachset";
+import Eachpok from "../Pokemon/Eachpok";
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -53,7 +54,7 @@ export function Menub() {
                 <Route exact={true} path="/Searchpok" element={<Searchpok />}/>
                 <Route exact={true} path="/Sets" element={<Sets />}/>
                 <Route exact={true} path="/Sets/:name" element={<Eachset />}/>
-
+                <Route exact={true} path="/Getpok/:name" element={<Eachpok />}/>
             </Routes>
         </>
     );
