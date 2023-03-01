@@ -11,12 +11,12 @@ export default function Sets() {
     const [searchTerm, setSearchTerm] = useState("");
 
 
-
-
+    
+    
     function Pokemon({ name, artist, image, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
-                <a href={id}><Card.Img variant="top" src={image} />
+                <a href={"/Sets/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>artist : {artist}</Card.Text>
@@ -26,12 +26,11 @@ export default function Sets() {
         );
     }
 
-
     async function GetPokemon() {
-        pokemon.set.all().then(cards => {
-            const cardsArray = Object.values(cards);
-            setResults({ data: cardsArray })
-            //  console.log(cardsArray[0])
+        pokemon.set.all().then(sets => {
+            const setsArray = Object.values(sets);
+            setResults({ data: setsArray })
+            //  console.log(setsArray[0])
         })
 
     }
@@ -42,7 +41,7 @@ export default function Sets() {
     }, []);
     return (
         <>
-            <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <input type="text" placeholder="Rechercher un Set" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
             <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val

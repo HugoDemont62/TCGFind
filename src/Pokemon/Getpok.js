@@ -43,7 +43,7 @@ function Getpok() {
     }, [page]);
     return (
         <>
-            <input type="text" placeholder="Rechercher un personnage" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <input type="text" placeholder="Rechercher un Pokémon dans cette liste" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
             <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val
