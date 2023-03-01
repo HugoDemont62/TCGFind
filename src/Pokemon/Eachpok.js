@@ -11,14 +11,14 @@ export default function Eachpok() {
     const [searchTerm, setSearchTerm] = useState("");
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, id }) {
+    function Pokemon({ name, artist, image, setid, setname,id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
+                    <Card.Text>Artiste : {artist}</Card.Text>
+                    <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
                 </Card.Body>
             </Card>
         );
@@ -38,9 +38,10 @@ export default function Eachpok() {
             await GetPokemon();
         })();
     }, []);
+
     return (
         <>
-            <h1>{name}</h1>
+            <h1></h1>
 
           
             <Container className="d-flex justify-content-center">
@@ -61,6 +62,8 @@ export default function Eachpok() {
                                     name={result.name}
                                     artist={result.artist}
                                     id={result.id}
+                                    setid={result.set.id}
+                                    setname={result.set.name}
                                     image={result.images.small}
                                 />
                             </li>

@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Navbar, Nav } from "react-bootstrap";
 import { Route, Link, Routes } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -8,7 +7,6 @@ import {
     MDBNavbarBrand,
     MDBNavbarToggler,
     MDBNavbarNav,
-    MDBNavbarItem,
     MDBNavbarLink,
     MDBIcon,
     MDBCollapse

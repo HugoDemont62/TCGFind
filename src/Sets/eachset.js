@@ -1,32 +1,30 @@
 import pokemon from 'pokemontcgsdk'
 import { useEffect, useState } from 'react'
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-
     useParams
   } from "react-router-dom";
 
 export default function Eachset() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    let { name} = useParams();
+    let { name } = useParams();
 
     function Pokemon({ name, artist, image, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
-                <Card.Img variant="top" src={image} />
+                <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>artist : {artist}</Card.Text>
                     <Card.Text>Id : {id}</Card.Text>
-                </Card.Body>
+                </Card.Body></a>
             </Card>
         );
     }
 
     async function GetPokemon() {
-        // display a set by id
         pokemon.card.where({q: 'set.id:'+name}).then(sets => {
             const setsArray = Object.values(sets);
             setResults({ data: setsArray[0] })

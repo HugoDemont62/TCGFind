@@ -1,6 +1,6 @@
 import pokemon from 'pokemontcgsdk';
 import { useEffect, useState } from 'react';
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });

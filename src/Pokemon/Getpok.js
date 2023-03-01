@@ -14,14 +14,14 @@ function Getpok() {
 
 
 
-    function Pokemon({ name, artist, image, id }) {
+    function Pokemon({ name, artist, image, set, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
+                    <Card.Text>Artiste : {artist}</Card.Text>
+                    <Card.Text>Set : {set}</Card.Text>
                 </Card.Body></a>
             </Card>
         );
@@ -74,6 +74,7 @@ function Getpok() {
                                     name={result.name}
                                     artist={result.artist}
                                     id={result.id}
+                                    set={result.set.name}
                                     image={result.images.small}
                                 />
                             </li>
