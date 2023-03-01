@@ -11,7 +11,20 @@ export default function Eachpok() {
     const [searchTerm, setSearchTerm] = useState("");
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, setid, setname,id }) {
+    function Pokemon({ name, artist, image, setid, setname, types, evolvesFrom, prices, id }) {
+
+        const evolve = () => {
+            if(evolvesFrom){
+                return (
+                    <Card.Text>Evolue de : {evolvesFrom}</Card.Text>
+                )
+            } else {
+                return (
+                    <Card.Text>Pas d'évolution précédente.</Card.Text>
+                )
+            }
+        }
+
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <Card.Img variant="top" src={image} />
@@ -19,6 +32,9 @@ export default function Eachpok() {
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>Artiste : {artist}</Card.Text>
                     <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
+                    <Card.Text>Type : {types}</Card.Text>
+                    {evolve()}
+                    <Card.Text>Prix moyen : {prices}</Card.Text>
                 </Card.Body>
             </Card>
         );
@@ -64,6 +80,9 @@ export default function Eachpok() {
                                     id={result.id}
                                     setid={result.set.id}
                                     setname={result.set.name}
+                                    types={result.types}
+                                    evolvesFrom={result.evolvesFrom}
+                                    prices={result.prices}
                                     image={result.images.small}
                                 />
                             </li>
