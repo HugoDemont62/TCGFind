@@ -41,7 +41,7 @@ export default function Sets() {
     }, []);
     return (
         <>
-            <input type="text" placeholder="Rechercher un Set" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <input type="text" placeholder="Search for a Set!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
             <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val

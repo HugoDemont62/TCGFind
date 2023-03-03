@@ -11,7 +11,7 @@ export default function Searchpok() {
 
     function Search() {
         return (
-            <input type="text" placeholder="Rechercher un Pokémon ! Ex : Charizard, Blastoise, Rayquaza, etc..." className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <input type="text" placeholder="Seek for a Pokémon ! Ex : Charizard, Blastoise, Rayquaza, etc..." className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
         )
     }
 
@@ -43,8 +43,8 @@ export default function Searchpok() {
     }, [searchTerm]); 
     return (
         <>
-            <input type="text" placeholder="Rechercher un Pokémon ! Ex : Charizard, Blastoise, Rayquaza, etc..." className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
-            <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
+            <input type="text" placeholder="Find a Pokémon! Ex: Charizard, Blastoise, Rayquaza, etc..." className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <p className="text-center">Results : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val
                 } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {

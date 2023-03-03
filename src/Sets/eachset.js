@@ -41,8 +41,8 @@ export default function Eachset() {
         <>
             <h1>Eachset</h1>
 
-            <input type="text" placeholder="Rechercher un Pokémon" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
-            <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
+            <input type="text" placeholder="Seek for a Pokémon!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <p className="text-center">Results : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val
                 } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {

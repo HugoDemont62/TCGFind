@@ -43,8 +43,8 @@ function Getpok() {
     }, [page]);
     return (
         <>
-            <input type="text" placeholder="Rechercher un Pokémon dans cette liste" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
-            <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
+            <input type="text" placeholder="Search a Pokémon in this page!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+            <p className="text-center">Results : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
                     return val
                 } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -53,8 +53,8 @@ function Getpok() {
             }).length}</p>
 
             <div className='btn-pok'>
-            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
-            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
+            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Previous</Button>
+            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Next</Button>{' '}
             </div>
             <Container className="d-flex justify-content-center">
 
@@ -83,8 +83,8 @@ function Getpok() {
                 </ul>
             </Container>
             <div className='btn-pok'>
-            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Page Précédente</Button>
-            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Page Suivante</Button>{' '}
+            <Button variant="secondary" size="sm" onClick={() => { setPage(page -1)}}>Previous</Button>
+            <Button variant="primary" size="sm" onClick={() => { setPage(page + 1) }}>Next</Button>{' '}
             </div>
         </>
     );

@@ -20,7 +20,7 @@ export default function Eachpok() {
                 )
             } else {
                 return (
-                    <Card.Text>Does not has an old evolve.</Card.Text>
+                    <Card.Text>This card does not has an old evolve.</Card.Text>
                 )
             }
         }
@@ -37,6 +37,18 @@ export default function Eachpok() {
             }
         }
 
+        const pokedexx = () => {
+            if(pokedex){
+                return (
+                <Card.Text>Pokedex number : {pokedex}</Card.Text>
+                )
+            } else {
+                return (
+                <Card.Text>This card does not has pokedex number.</Card.Text>
+                )
+            }
+        }
+
 
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
@@ -46,10 +58,10 @@ export default function Eachpok() {
                     <Card.Text>Artist : {artist}</Card.Text>
                     <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
                     <Card.Text>Card number : {number}/{setprinted}</Card.Text>
-                    <Card.Text>Pokedex number : {pokedex}</Card.Text>
+                    {pokedexx()}
                     {type()}
                     {evolve()}
-                    <Card.Text>Average price : <a href={priceurl}>{prices}$</a></Card.Text>
+                    <Card.Text>Average price : <a href={priceurl} target="_blank">{prices}$</a></Card.Text>
                 </Card.Body>
             </Card>
         );
