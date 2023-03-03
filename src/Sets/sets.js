@@ -13,14 +13,14 @@ export default function Sets() {
 
     
     
-    function Pokemon({ name, artist, image, id }) {
+    function Pokemon({ name, artist, image, printed, release, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <a href={"/Sets/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
+                    <Card.Text>Total cards : {printed}</Card.Text>
+                    <Card.Text>Release date : {release}</Card.Text>
                 </Card.Body></a>
             </Card>
         );
@@ -68,6 +68,8 @@ export default function Sets() {
                                     name={result.name}
                                     artist={result.artist}
                                     id={result.id}
+                                    printed={result.printedTotal}
+                                    release={result.releaseDate}
                                     image={result.images.logo}
                                 />
                             </li>

@@ -11,16 +11,16 @@ export default function Eachpok() {
     const [searchTerm, setSearchTerm] = useState("");
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, setid, setname, types, evolvesFrom, prices, priceurl, id }) {
+    function Pokemon({ name, artist, image, setid, setname, setprinted, number, pokedex, types, evolvesFrom, prices, priceurl, id }) {
 
         const evolve = () => {
             if(evolvesFrom){
                 return (
-                    <Card.Text>Evolue de : {evolvesFrom}</Card.Text>
+                    <Card.Text>Evolve from : {evolvesFrom}</Card.Text>
                 )
             } else {
                 return (
-                    <Card.Text>Pas d'évolution précédente.</Card.Text>
+                    <Card.Text>Does not has an old evolve.</Card.Text>
                 )
             }
         }
@@ -32,7 +32,7 @@ export default function Eachpok() {
                 )
             } else {
                 return (
-                <Card.Text>Cette carte n'a pas de type.</Card.Text>
+                <Card.Text>This card does not has type.</Card.Text>
                 )
             }
         }
@@ -43,11 +43,13 @@ export default function Eachpok() {
                 <Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>Artiste : {artist}</Card.Text>
+                    <Card.Text>Artist : {artist}</Card.Text>
                     <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
+                    <Card.Text>Card number : {number}/{setprinted}</Card.Text>
+                    <Card.Text>Pokedex number : {pokedex}</Card.Text>
                     {type()}
                     {evolve()}
-                    <Card.Text>Prix moyen : <a href={priceurl}>{prices}$</a></Card.Text>
+                    <Card.Text>Average price : <a href={priceurl}>{prices}$</a></Card.Text>
                 </Card.Body>
             </Card>
         );
@@ -58,7 +60,6 @@ export default function Eachpok() {
             const pokArray = Object.values(pok);
             setResults({ data: pokArray })
             // console.log(pokArray[0])
-            console.log(pokArray[0])
         })
 
     }
@@ -70,9 +71,7 @@ export default function Eachpok() {
 
     return (
         <>
-            <h1></h1>
 
-          
             <Container className="d-flex justify-content-center">
 
                 <ul className="cards">
@@ -97,7 +96,10 @@ export default function Eachpok() {
                                     evolvesFrom={result.evolvesFrom}
                                     prices={result.cardmarket.prices.averageSellPrice}
                                     priceurl={result.cardmarket.url}
-                                    image={result.images.small}
+                                    setprinted={result.set.printedTotal}
+                                    number={result.number}
+                                    pokedex={result.nationalPokedexNumbers}
+                                    image={result.images.large}
                                 />
                             </li>
                         );

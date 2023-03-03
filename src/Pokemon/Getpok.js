@@ -20,7 +20,7 @@ function Getpok() {
                 <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>Artiste : {artist}</Card.Text>
+                    <Card.Text>Artist : {artist}</Card.Text>
                     <Card.Text>Set : {set}</Card.Text>
                 </Card.Body></a>
             </Card>

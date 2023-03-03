@@ -15,14 +15,14 @@ export default function Searchpok() {
         )
     }
 
-    function Pokemon({ name, artist, image, id }) {
+    function Pokemon({ name, artist, image, setid, setname, id }) {
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
+                    <Card.Text>Artist : {artist}</Card.Text>
+                    <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
                 </Card.Body></a>
             </Card>
         );
@@ -33,7 +33,6 @@ export default function Searchpok() {
             return []
         pokemon.card.all({q: 'name:' + searchTerm}).then(cards => {
             const cardsArray = Object.values(cards);
-            console.log("ICI", cardsArray)
             setResults({ data: cardsArray})
         })
     }
@@ -42,7 +41,6 @@ export default function Searchpok() {
             await GetPokemon();
         })();
     }, [searchTerm]); 
-    console.log(results)
     return (
         <>
             <input type="text" placeholder="Rechercher un Pokémon ! Ex : Charizard, Blastoise, Rayquaza, etc..." className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
@@ -56,7 +54,8 @@ export default function Searchpok() {
             <Container className="d-flex justify-content-center">
                 <ul className="cards">
                 {results.data && results.data.map((val, key) => {
-                    return <li> <Pokemon name={val.name} artist={val.artist} image={val.images.small} id={val.id} key={key} /></li>
+                    return <li> <Pokemon name={val.name} artist={val.artist} image={val.images.small} setid={val.set.id}
+                    setname={val.set.name} id={val.id} key={key} /></li>
                 })}
                 </ul>
             </Container>
