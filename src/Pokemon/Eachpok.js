@@ -11,7 +11,7 @@ export default function Eachpok() {
     const [searchTerm, setSearchTerm] = useState("");
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, setid, setname, types, evolvesFrom, prices, id }) {
+    function Pokemon({ name, artist, image, setid, setname, types, evolvesFrom, prices, priceurl, id }) {
 
         const evolve = () => {
             if(evolvesFrom){
@@ -25,6 +25,19 @@ export default function Eachpok() {
             }
         }
 
+        const type = () => {
+            if(types){
+                return (
+                <Card.Text>Type : {types}</Card.Text>
+                )
+            } else {
+                return (
+                <Card.Text>Cette carte n'a pas de type.</Card.Text>
+                )
+            }
+        }
+
+
         return (
             <Card style={{ width: '18rem' }} className="cardmain">
                 <Card.Img variant="top" src={image} />
@@ -32,20 +45,20 @@ export default function Eachpok() {
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>Artiste : {artist}</Card.Text>
                     <Card.Text>Set : <a href={"/Sets/"+setid}>{setname}</a></Card.Text>
-                    <Card.Text>Type : {types}</Card.Text>
+                    {type()}
                     {evolve()}
-                    <Card.Text>Prix moyen : {prices}</Card.Text>
+                    <Card.Text>Prix moyen : <a href={priceurl}>{prices}$</a></Card.Text>
                 </Card.Body>
             </Card>
         );
     }
 
     async function GetPokemon() {
-        // display a set by id
         pokemon.card.all({ q: 'id:' + name }).then(pok => {
             const pokArray = Object.values(pok);
             setResults({ data: pokArray })
             // console.log(pokArray[0])
+            console.log(pokArray[0])
         })
 
     }
@@ -82,7 +95,8 @@ export default function Eachpok() {
                                     setname={result.set.name}
                                     types={result.types}
                                     evolvesFrom={result.evolvesFrom}
-                                    prices={result.prices}
+                                    prices={result.cardmarket.prices.averageSellPrice}
+                                    priceurl={result.cardmarket.url}
                                     image={result.images.small}
                                 />
                             </li>
