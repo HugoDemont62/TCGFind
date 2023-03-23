@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/main.scss"
 import { Route, Link, Routes } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -23,7 +24,7 @@ export function Menub() {
 
     return (
         <>
-            <MDBNavbar expand='lg' light bgColor='light'>
+            <MDBNavbar expand='lg'>
                 <MDBContainer fluid>
                     <MDBNavbarBrand href='/'>TCGFind</MDBNavbarBrand>
                     <MDBNavbarToggler
@@ -35,7 +36,7 @@ export function Menub() {
                     </MDBNavbarToggler>
                     <MDBCollapse navbar show={showNavSecond}>
                         <MDBNavbarNav>
-                            <MDBNavbarLink active aria-current='page' href='/'>
+                            <MDBNavbarLink aria-current='page' href='/'>
                                 Home
                             </MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Getpok">Cards</Link></MDBNavbarLink>
