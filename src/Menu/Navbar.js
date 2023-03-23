@@ -16,6 +16,7 @@ import Searchpok from "../Search/search";
 import Sets from "../Sets/sets";
 import Eachset from "../Sets/eachset";
 import Eachpok from "../Pokemon/Eachpok";
+import Index from "../Index/Index";
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -48,6 +49,7 @@ export function Menub() {
                 </MDBContainer>
             </MDBNavbar>
             <Routes>
+                <Route exact={true} path="/" element={<Index />}/>
                 <Route exact={true} path="/Getpok" element={<Getpok />}/>
                 <Route exact={true} path="/Searchpok" element={<Searchpok />}/>
                 <Route exact={true} path="/Sets" element={<Sets />}/>
