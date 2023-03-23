@@ -18,6 +18,7 @@ import Sets from "../Sets/sets";
 import Eachset from "../Sets/eachset";
 import Eachpok from "../Pokemon/Eachpok";
 import Index from "../Index/Index";
+import About from "../Index/About";
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -36,15 +37,11 @@ export function Menub() {
                     </MDBNavbarToggler>
                     <MDBCollapse navbar show={showNavSecond}>
                         <MDBNavbarNav>
-                            <MDBNavbarLink aria-current='page' href='/'>
-                                Home
-                            </MDBNavbarLink>
+                            <MDBNavbarLink><Link to="/">Home</Link></MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Getpok">Cards</Link></MDBNavbarLink>
                             <MDBNavbarLink><Link to="/Sets">Sets</Link></MDBNavbarLink>
-                            <MDBNavbarLink><Link to="/Searchpok">Rechercher</Link></MDBNavbarLink>
-                            <MDBNavbarLink disabled href='/' tabIndex={-1} aria-disabled='true'>
-                                Disabled
-                            </MDBNavbarLink>
+                            <MDBNavbarLink><Link to="/Searchpok">Search</Link></MDBNavbarLink>
+                            <MDBNavbarLink><Link to="/About">About</Link></MDBNavbarLink>
                         </MDBNavbarNav>
                     </MDBCollapse>
                 </MDBContainer>
@@ -56,6 +53,7 @@ export function Menub() {
                 <Route exact={true} path="/Sets" element={<Sets />}/>
                 <Route exact={true} path="/Sets/:name" element={<Eachset />}/>
                 <Route exact={true} path="/Getpok/:name" element={<Eachpok />}/>
+                <Route exact={true} path="/About" element={<About />}/>
             </Routes>
         </>
     );

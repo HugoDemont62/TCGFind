@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Container, Card, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/getpok.scss';
+import Card3d from './Card3d';
 
 pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
 
@@ -11,66 +12,46 @@ function Getpok() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-   
+
     function Pokemon({ name, artist, image, set, id }) {
+        
         return (
             <>
                 <div className='card3d'>
-                    <a href={"/Getpok/" + id}><img src={image} className='carte' />
-                    </a>
+                    <div className='card3d__content'>
+                        <a href={"/Getpok/" + id}>
+                            <img src={image} className='carte' />
+                        </a>
+                    </div>
                 </div>
             </>
         );
     }
 
-    function map(val, minA, maxA, minB, maxB) {
-        return minB + ((val - minA) * (maxB - minB)) / (maxA - minA);
-      }
-      
-      function Card3D(card, ev) {
-        let img = card.querySelector('img');
-        let imgRect = card.getBoundingClientRect();
-        let width = imgRect.width;
-        let height = imgRect.height;
-        let mouseX = ev.offsetX;
-        let mouseY = ev.offsetY;
-        let rotateY = map(mouseX, 0, 180, -25, 25);
-        let rotateX = map(mouseY, 0, 250, 25, -25);
-        let brightness = map(mouseY, 0, 250, 1.5, 0.5);
-        
-        img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        img.style.filter = `brightness(${brightness})`;
-      }
-      
-      var cards = document.querySelectorAll('.card3d');
-      
-      cards.forEach((card) => {
-        card.addEventListener('mousemove', (ev) => {
-          Card3D(card, ev);
-        });
-        
-        card.addEventListener('mouseleave', (ev) => {
-          let img = card.querySelector('img');
-          
-          img.style.transform = 'rotateX(0deg) rotateY(0deg)';
-          img.style.filter = 'brightness(1)';
-        });
-      });
-
-
     async function GetPokemon() {
+        setLoading(true);
         pokemon.card.where({ pageSize: 48, page: page, orderBy: 'name' }).then(cards => {
             const cardsArray = Object.values(cards);
             setResults({ data: cardsArray[0] })
+            setLoading(false);
         })
-
     }
-    useEffect(() => {
-        (async () => {
-            await GetPokemon();
-        })();
-    }, [page]);
+      
+      useEffect(() => {
+        GetPokemon();
+      }, [page]);
+      
+      useEffect(() => {
+        Card3d();
+      }, [results]);
+
+
+      if (loading) {
+        return <div className="loading">Loading...</div>;
+      }
+
     return (
         <>
             <div className='main'>

@@ -2,6 +2,7 @@ import pokemon from 'pokemontcgsdk';
 import { useEffect, useState } from 'react';
 import { Container, Card } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/getpok.scss';
 
 pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
 
@@ -9,28 +10,33 @@ pokemon.configure({ apiKey: 'c8452179-1a23-4351-8c61-a70d0e27fa10' });
 export default function Sets() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
+    const [loading, setLoading] = useState(false);
 
     
     
     function Pokemon({ name, artist, image, printed, release, id }) {
         return (
-            <Card style={{ width: '18rem' }} className="cardmain">
-                <a href={"/Sets/"+id}><Card.Img variant="top" src={image} />
-                <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Text>Total cards : {printed}</Card.Text>
-                    <Card.Text>Release date : {release}</Card.Text>
-                </Card.Body></a>
-            </Card>
+            <div className='sets'>
+                <a href={"/Sets/"+id}>
+                    <div className='sets__content'>
+                        <img src={image} alt={'set : '+ name}/>
+                    </div>
+                    <div className='sets__content2'>
+                    <h5>{name}</h5>
+                    <p>Total cards : {printed}</p>
+                    <p>Release date : {release}</p>
+                    </div>
+                </a>
+            </div>
         );
     }
 
     async function GetPokemon() {
+        setLoading(true);
         pokemon.set.all().then(sets => {
             const setsArray = Object.values(sets);
             setResults({ data: setsArray })
-            //  console.log(setsArray[0])
+            setLoading(false);
         })
 
     }
@@ -39,8 +45,14 @@ export default function Sets() {
             await GetPokemon();
         })();
     }, []);
+
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
+
     return (
         <>
+            <div className='main'>
             <input type="text" placeholder="Search for a Set!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
             <p className="text-center">Résultats : {results.data && results.data.filter((val) => {
                 if (searchTerm === "") {
@@ -62,9 +74,8 @@ export default function Sets() {
                         }
                     }).map((result) => {
                         return (
-                            <li>
+                            <li key={result.id}>
                                 <Pokemon
-                                    key={result.id}
                                     name={result.name}
                                     artist={result.artist}
                                     id={result.id}
@@ -77,6 +88,7 @@ export default function Sets() {
                     })}
                 </ul>
             </Container>
+            </div>
         </>
     );
 }

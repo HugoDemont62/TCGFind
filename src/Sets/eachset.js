@@ -2,79 +2,96 @@ import pokemon from 'pokemontcgsdk'
 import { useEffect, useState } from 'react'
 import { Container, Card } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/getpok.scss';
+import Card3d from '../Pokemon/Card3d';
 import {
     useParams
-  } from "react-router-dom";
+} from "react-router-dom";
 
 export default function Eachset() {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [loading, setLoading] = useState(false);
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, id }) {
+    function Pokemon({ name, artist, image, set, id }) {
+
         return (
-            <Card style={{ width: '18rem' }} className="cardmain">
-                <a href={"/Getpok/"+id}><Card.Img variant="top" src={image} />
-                <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Text>artist : {artist}</Card.Text>
-                    <Card.Text>Id : {id}</Card.Text>
-                </Card.Body></a>
-            </Card>
+            <>
+                <div className='card3d'>
+                    <div className='card3d__content'>
+                        <a href={"/Getpok/" + id}>
+                            <img src={image} className='carte' />
+                        </a>
+                    </div>
+                </div>
+            </>
         );
     }
 
     async function GetPokemon() {
-        pokemon.card.where({q: 'set.id:'+name}).then(sets => {
+        setLoading(true);
+        pokemon.card.where({ q: 'set.id:' + name }).then(sets => {
             const setsArray = Object.values(sets);
             setResults({ data: setsArray[0] })
-            // console.log(setsArray[0])
+            setLoading(false);
         })
 
     }
     useEffect(() => {
-        (async () => {
-            await GetPokemon();
-        })();
+        GetPokemon();
     }, []);
+
+    useEffect(() => {
+        Card3d();
+    }, [results]);
+
+
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
+
     return (
         <>
-            <h1>Eachset</h1>
+            <div className='main'>
+                {/* grab the name of the set */}
+                <h1 className="text-center">Set id : {name}</h1>
 
-            <input type="text" placeholder="Seek for a Pokémon!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
-            <p className="text-center">Results : {results.data && results.data.filter((val) => {
-                if (searchTerm === "") {
-                    return val
-                } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return val
-                }
-            }).length}</p>
+                <input type="text" placeholder="Seek for a Pokémon!" className="form-control mb-3" onChange={event => { setSearchTerm(event.target.value) }} />
+                <p className="text-center">Results : {results.data && results.data.filter((val) => {
+                    if (searchTerm === "") {
+                        return val
+                    } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return val
+                    }
+                }).length}</p>
 
-            <Container className="d-flex justify-content-center">
+                <Container className="d-flex justify-content-center">
 
-<ul className="cards">
+                    <ul className="cards">
 
-    {results.data && results.data.filter((val) => {
-        if (searchTerm === "") {
-            return val
-        } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-            return val
-        }
-    }).map((result) => {
-        return (
-            <li>
-                <Pokemon
-                    key={result.id}
-                    name={result.name}
-                    artist={result.artist}
-                    id={result.id}
-                    image={result.images.small}
-                />
-            </li>
-        );
-    })}
-</ul>
-</Container>
+                        {results.data && results.data.filter((val) => {
+                            if (searchTerm === "") {
+                                return val
+                            } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                return val
+                            }
+                        }).map((result) => {
+                            return (
+                                <li>
+                                    <Pokemon
+                                        key={result.id}
+                                        name={result.name}
+                                        artist={result.artist}
+                                        id={result.id}
+                                        image={result.images.small}
+                                    />
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </Container>
+            </div>
         </>
     )
 }
