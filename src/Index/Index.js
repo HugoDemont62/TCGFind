@@ -47,7 +47,6 @@ export default function Index() {
             <div className='home'>
                 <div className='home__content'>
                     <h1 className='home__title'>Welcome to the Pokémon TCG Find API</h1>
-                    <h3 className='home__h3'>This is a simple API that allows you to search for Pokémon cards, sets and more!</h3>
                 </div>
 
                 <div className='home__content2'>
@@ -60,14 +59,13 @@ export default function Index() {
                 </div>
 
                 <div className='home__content4'>
-                    <h2 className='home__title3'>Or check out some random cards!</h2>
                     <div className='home__content5'>
                     <ul className="cards">
                            {loading ? <div className="loading">Loading...</div> :  results.data && results.data.map((val, key) => {
                                 return <li key={val.id}> <Pokemon name={val.name} artist={val.artist} image={val.images.small} setid={val.set.id}
                                     setname={val.set.name} id={val.id} key={key} /></li>
                             }
-                            ).filter((val, key) => key < 3)
+                            ).filter((val, key) => key < 6)
                             }
 
                         </ul>

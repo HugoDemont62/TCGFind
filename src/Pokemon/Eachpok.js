@@ -14,7 +14,7 @@ export default function Eachpok() {
     const [loading, setLoading] = useState(false);
     let { name } = useParams();
 
-    function Pokemon({ name, artist, image, setid, setname, setprinted, number, pokedex, types, evolvesFrom, prices, priceurl, id }) {
+    function Pokemon({ name, artist, image, setid, setname, setprinted, number, pokedex, types, evolvesFrom, prices, priceurl, lastprice, id }) {
 
         const evolve = () => {
             if (evolvesFrom) {
@@ -61,13 +61,18 @@ export default function Eachpok() {
                     </div>
                     <div className='eachcard__content2'>
                     <Card.Title>{name}</Card.Title>
+                    <div className='card_set'>
                     <Card.Text>Artist : {artist}</Card.Text>
                     <Card.Text>Set : <a href={"/Sets/" + setid}>{setname}</a></Card.Text>
                     <Card.Text>Card number : {number}/{setprinted}</Card.Text>
+                    </div>
+                    <div className='card_type'>
                     {pokedexx()}
                     {type()}
                     {evolve()}
+                    </div>
                     <Card.Text>Average price : <a href={priceurl} target="_blank">{prices}$</a></Card.Text>
+                    <Card.Text>Last price : <a href={priceurl} target="_blank">{lastprice}$</a></Card.Text>
                     </div>
                 </div>
             </>
@@ -124,6 +129,7 @@ export default function Eachpok() {
                                         types={result.types}
                                         evolvesFrom={result.evolvesFrom}
                                         prices={result.cardmarket.prices.averageSellPrice}
+                                        lastprice={result.cardmarket.prices.avg1}
                                         priceurl={result.cardmarket.url}
                                         setprinted={result.set.printedTotal}
                                         number={result.number}

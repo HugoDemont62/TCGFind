@@ -5,3 +5,14 @@
         text-decoration: none;
     }
 }
+
+.navbar-nav{
+    a{
+        color: #fff;
+        text-decoration: none;
+        transition: 0.3s all;
+        &:hover{
+            color: #87d3e6;
+        }
+    }
+}

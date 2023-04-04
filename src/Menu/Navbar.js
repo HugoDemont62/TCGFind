@@ -19,6 +19,7 @@ import Eachset from "../Sets/eachset";
 import Eachpok from "../Pokemon/Eachpok";
 import Index from "../Index/Index";
 import About from "../Index/About";
+import logo from "../images/logo.png"
 
 export function Menub() {
     const [showNavSecond, setShowNavSecond] = useState(false);
@@ -27,7 +28,9 @@ export function Menub() {
         <>
             <MDBNavbar expand='lg'>
                 <MDBContainer fluid>
-                    <MDBNavbarBrand href='/'>TCGFind</MDBNavbarBrand>
+                    <MDBNavbarBrand href='/'>
+                        <img src={logo} alt="logo" className="logo" />                        
+                    </MDBNavbarBrand>
                     <MDBNavbarToggler
                         aria-expanded='false'
                         aria-label='Toggle navigation'
